@@ -198,6 +198,8 @@ export class HeroCard extends LitElement {
         display: flex;
         flex-flow: column;
         justify-content:flex-end;
+        color: var(--md-sys-color-inverse-surface);
+        transition: color 1.5s ease-in-out;
       }
       figure {
         position:absolute;
@@ -245,7 +247,6 @@ export class HeroCard extends LitElement {
       h1,p {
         position:relative;
         margin: 0;
-        mix-blend-mode: exclusion;
       }
       h1 {
         margin-block: 1rem;
@@ -261,6 +262,9 @@ export class HeroCard extends LitElement {
         }
       }
       @media (hover: hover) {
+        div:hover {
+          color: var(--md-sys-color-inverse-on-surface);
+        }
         div:hover picture img {
           transform: scale(1.2);
         }
