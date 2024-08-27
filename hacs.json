@@ -1,5 +1,5 @@
 {
-    "name": "Boilerplate Card",
+    "name": "Hero Card",
     "render_readme": true,
-    "filename": "boilerplate-card.js"
+    "filename": "hero-card.js"
 }

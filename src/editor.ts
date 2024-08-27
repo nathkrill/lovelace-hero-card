@@ -3,18 +3,18 @@ import { LitElement, html, TemplateResult, css, CSSResultGroup } from 'lit';
 import { HomeAssistant, fireEvent, LovelaceCardEditor } from 'custom-card-helpers';
 
 import { ScopedRegistryHost } from '@lit-labs/scoped-registry-mixin';
-import { BoilerplateCardConfig } from './types';
+import { HeroCardConfig } from './types';
 import { customElement, property, state } from 'lit/decorators';
 import { formfieldDefinition } from '../elements/formfield';
 import { selectDefinition } from '../elements/select';
 import { switchDefinition } from '../elements/switch';
 import { textfieldDefinition } from '../elements/textfield';
 
-@customElement('boilerplate-card-editor')
+@customElement('hero-card-editor')
 export class BoilerplateCardEditor extends ScopedRegistryHost(LitElement) implements LovelaceCardEditor {
   @property({ attribute: false }) public hass?: HomeAssistant;
 
-  @state() private _config?: BoilerplateCardConfig;
+  @state() private _config?: HeroCardConfig;
 
   @state() private _helpers?: any;
 
@@ -27,7 +27,7 @@ export class BoilerplateCardEditor extends ScopedRegistryHost(LitElement) implem
     ...formfieldDefinition,
   };
 
-  public setConfig(config: BoilerplateCardConfig): void {
+  public setConfig(config: HeroCardConfig): void {
     this._config = config;
 
     this.loadCardHelpers();
@@ -41,20 +41,29 @@ export class BoilerplateCardEditor extends ScopedRegistryHost(LitElement) implem
     return true;
   }
 
-  get _name(): string {
-    return this._config?.name || '';
+  get _heading(): string {
+    return this._config?.heading || '';
   }
+
+  get _subheading(): string {
+    return this._config?.subheading || '';
+  }
+
+  get _entity_image(): boolean {
+    return this._config?.entity_image || false;
+  }
+
+  get _foreground_image(): boolean {
+    return this._config?.foreground_image || false;
+  }
+
 
   get _entity(): string {
     return this._config?.entity || '';
   }
 
-  get _show_warning(): boolean {
-    return this._config?.show_warning || false;
-  }
-
-  get _show_error(): boolean {
-    return this._config?.show_error || false;
+  get _image_url(): string {
+    return this._config?.image_url || '';
   }
 
   protected render(): TemplateResult | void {
@@ -66,36 +75,51 @@ export class BoilerplateCardEditor extends ScopedRegistryHost(LitElement) implem
     const entities = Object.keys(this.hass.states);
 
     return html`
-      <mwc-select
-        naturalMenuWidth
-        fixedMenuPosition
-        label="Entity (Required)"
-        .configValue=${'entity'}
-        .value=${this._entity}
-        @selected=${this._valueChanged}
-        @closed=${(ev) => ev.stopPropagation()}
-      >
-        ${entities.map((entity) => {
-          return html`<mwc-list-item .value=${entity}>${entity}</mwc-list-item>`;
-        })}
-      </mwc-select>
       <mwc-textfield
-        label="Name (Optional)"
-        .value=${this._name}
-        .configValue=${'name'}
+        label="Heading (Optional)"
+        .value=${this._heading}
+        .configValue=${'heading'}
         @input=${this._valueChanged}
       ></mwc-textfield>
-      <mwc-formfield .label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}>
+      <mwc-textfield
+        label="Subheading (Optional)"
+        .value=${this._subheading}
+        .configValue=${'subheading'}
+        @input=${this._valueChanged}
+      ></mwc-textfield>
+      <mwc-formfield .label=${`Entity Image ${this._entity_image ? 'off' : 'on'}`}>
         <mwc-switch
-          .checked=${this._show_warning !== false}
-          .configValue=${'show_warning'}
+          .checked=${this._entity_image !== false}
+          .configValue=${'entity_image'}
           @change=${this._valueChanged}
         ></mwc-switch>
       </mwc-formfield>
-      <mwc-formfield .label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}>
+      ${this._entity_image ? html`
+        <mwc-select
+          naturalMenuWidth
+          fixedMenuPosition
+          label="Entity"
+          .configValue=${'entity'}
+          .value=${this._entity}
+          @selected=${this._valueChanged}
+          @closed=${(ev) => ev.stopPropagation()}
+        >
+          ${entities.map((entity) => {
+            return html`<mwc-list-item .value=${entity}>${entity}</mwc-list-item>`;
+          })}
+        </mwc-select>
+      ` : html`
+        <mwc-textfield
+          label="Image URL"
+          .value=${this._image_url}
+          .configValue=${'image_url'}
+          @input=${this._valueChanged}
+        ></mwc-textfield>
+      `}
+      <mwc-formfield .label=${`Show Foreground Image ${this._entity_image ? 'show' : 'hide'}`}>
         <mwc-switch
-          .checked=${this._show_error !== false}
-          .configValue=${'show_error'}
+          .checked=${this._foreground_image !== false}
+          .configValue=${'foreground_image'}
           @change=${this._valueChanged}
         ></mwc-switch>
       </mwc-formfield>

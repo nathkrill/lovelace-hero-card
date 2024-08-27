@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate-card",
+  "name": "hero-card",
   "version": "1.4.1",
-  "description": "Lovelace boilerplate-card",
+  "description": "Lovelace hero-card",
   "keywords": [
     "home-assistant",
     "homeassistant",
@@ -10,8 +10,8 @@
     "lovelace",
     "custom-cards"
   ],
-  "module": "boilerplate-card.js",
-  "repository": "git@github.com:custom_cards/boilerplate-card.git",
+  "module": "hero-card.js",
+  "repository": "git@github.com:custom_cards/hero-card.git",
   "author": "Ian Richardson <iantrich@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -25,8 +25,10 @@
     "@material/mwc-switch": "^0.25.3",
     "@material/mwc-textfield": "^0.25.3",
     "custom-card-helpers": "^1.7.2",
+    "ha-template": "^1.2.2",
     "home-assistant-js-websocket": "^5.11.1",
-    "lit": "^2.0.0"
+    "lit": "^2.0.0",
+    "material-color-web-component": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
