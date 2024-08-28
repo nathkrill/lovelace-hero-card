@@ -11,7 +11,7 @@ import {
   getLovelace,
 } from 'custom-card-helpers'; // This is a community maintained npm module with common helper functions/types. https://github.com/custom-cards/custom-card-helpers
 import registerTemplates from 'ha-template';
-import {DynamicColor} from 'material-color-web-component';
+import {registerDynamicColor,DynamicColor} from 'material-color-web-component';
 
 
 import type { HeroCardConfig } from './types';
@@ -35,9 +35,8 @@ console.info(
 });
 
 registerTemplates();
-if (customElements.get( 'dynamic-color' ) === undefined) {
-  customElements.define('dynamic-color', DynamicColor)
-}
+registerDynamicColor();
+
 @customElement('hero-card')
 export class HeroCard extends LitElement {
   public static async getConfigElement(): Promise<LovelaceCardEditor> {

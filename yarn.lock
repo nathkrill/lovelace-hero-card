@@ -2149,10 +2149,10 @@
   dependencies:
     "semver" "^6.0.0"
 
-"material-color-web-component@^1.1.0":
-  "integrity" "sha512-MdoEbRgtRzP+iT8jvr0zGIdPNNa9dVz2nvyTFSRmthlM4o0RzlFLX2FdyQBt703tuwwhNrklWKSloibVBOYr+w=="
-  "resolved" "https://registry.npmjs.org/material-color-web-component/-/material-color-web-component-1.1.0.tgz"
-  "version" "1.1.0"
+"material-color-web-component@^1.1.1":
+  "integrity" "sha512-p+msWp7d9PyW5M4C9/MsrH5cgGRpETlw2BV8Pk/sBiseBGdHPz6JmO0+8HC9C3Xm8PKZnWtA/vWyNO6Xgy5nHA=="
+  "resolved" "https://registry.npmjs.org/material-color-web-component/-/material-color-web-component-1.1.1.tgz"
+  "version" "1.1.1"
   dependencies:
     "@material/material-color-utilities" "^0.2.5"
     "lit" "^2.7.2"

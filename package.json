@@ -1,6 +1,6 @@
 {
   "name": "hero-card",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Lovelace hero-card",
   "keywords": [
     "home-assistant",
@@ -28,7 +28,7 @@
     "ha-template": "^1.2.2",
     "home-assistant-js-websocket": "^5.11.1",
     "lit": "^2.0.0",
-    "material-color-web-component": "^1.1.0"
+    "material-color-web-component": "^1.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0",
