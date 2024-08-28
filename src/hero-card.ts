@@ -287,11 +287,8 @@ export class HeroCard extends LitElement {
         div:hover picture img {
           transform: scale(1.2);
         }
-        div:hover img:not(.main) {
+        div:hover img.background {
           opacity: 0.1;
-        }
-        div:hover picture img:not(.main) {
-          opacity: 0.35;
         }
       }
     `;
