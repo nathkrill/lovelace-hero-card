@@ -246,7 +246,6 @@ export class HeroCard extends LitElement {
       }
       img.background {
         width: 100%;
-        object-fit:cover;
         filter: blur(30px);
         transform: rotateY(180deg);
         animation: 7s ease-in-out infinite alternate-reverse backgroundFade;
@@ -275,11 +274,11 @@ export class HeroCard extends LitElement {
       }
       @keyframes backgroundFade {
         from {
-          filter: blur(30px) saturate(1.2);
+          filter: blur(30px) saturate(5);
           transform: scale(1) rotate(0deg) skew(3deg);
         }
         to {
-          filter: blur(50px) saturate(0.5);
+          filter: blur(50px) saturate(2.5);
           transform: scale(1.3) rotate(3deg);
         }
       }
