@@ -11,7 +11,7 @@ import {
   getLovelace,
 } from 'custom-card-helpers'; // This is a community maintained npm module with common helper functions/types. https://github.com/custom-cards/custom-card-helpers
 import registerTemplates from 'ha-template';
-// import {DynamicColor} from 'material-color-web-component';
+import {DynamicColor} from 'material-color-web-component';
 
 
 import type { HeroCardConfig } from './types';
@@ -35,9 +35,8 @@ console.info(
 });
 
 registerTemplates();
-console.log(customElements.get( 'dynamic-color' ))
 if (customElements.get( 'dynamic-color' ) === undefined) {
-  // customElements.define('dynamic-color', DynamicColor)
+  customElements.define('dynamic-color', DynamicColor)
 }
 @customElement('hero-card')
 export class HeroCard extends LitElement {
@@ -102,6 +101,29 @@ export class HeroCard extends LitElement {
     const entity = this.hass.states[entity_id]
     return entity
   }
+
+  protected firstUpdated(_changedProperties) {
+        super.firstUpdated(_changedProperties)
+        const colorEl: DynamicColor = this.renderRoot.querySelector("dynamic-color");
+        const imageEl = this.renderRoot.querySelector("img");
+        if (imageEl === null || colorEl === null) {
+          return;
+        }
+        const observerconfig = { attributes: true };
+        const callback = (mutationList) => {
+            for (const mutation of mutationList) {
+              if (mutation.type === "childList") {
+                // console.log("A child node has been added or removed.");
+              } else if (mutation.type === "attributes") {
+                if (mutation.attributeName === 'src') {
+                    colorEl?.refresh()
+                }
+              }
+            }
+          };
+        const observer = new MutationObserver(callback);
+        observer.observe(imageEl, observerconfig);
+    }
 
   // https://lit.dev/docs/components/rendering/
   protected render(): TemplateResult | void {
@@ -189,7 +211,7 @@ export class HeroCard extends LitElement {
       :host {
       }
       div {
-        background-color: var(--md-sys-color-on-surface-variant);
+        background-color: var(--md-sys-color-surface-variant);
         position:relative;
         padding: calc(2 * var(--column-gap)) calc(2.5 * var(--column-gap));
         border-radius: calc(2 * var(--column-gap));
@@ -198,7 +220,7 @@ export class HeroCard extends LitElement {
         display: flex;
         flex-flow: column;
         justify-content:flex-end;
-        color: var(--md-sys-color-inverse-surface);
+        color: var(--md-sys-color-on-surface-variant);
         transition: color 1.5s ease-in-out;
       }
       figure {
@@ -247,6 +269,7 @@ export class HeroCard extends LitElement {
       h1,p {
         position:relative;
         margin: 0;
+        mix-blend-mode: color-dodge;
       }
       h1 {
         margin-block: 1rem;
@@ -262,9 +285,6 @@ export class HeroCard extends LitElement {
         }
       }
       @media (hover: hover) {
-        div:hover {
-          color: var(--md-sys-color-inverse-on-surface);
-        }
         div:hover picture img {
           transform: scale(1.2);
         }
