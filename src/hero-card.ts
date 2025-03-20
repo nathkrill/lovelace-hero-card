@@ -245,7 +245,7 @@ export class HeroCard extends LitElement {
         transition-property: transform,opacity;
       }
       img.background {
-        width: 100%;
+        width: 30%;
         filter: blur(30px);
         transform: rotateY(180deg);
         animation: 7s ease-in-out infinite alternate-reverse backgroundFade;
