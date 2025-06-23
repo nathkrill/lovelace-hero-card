@@ -53,10 +53,6 @@ export class BoilerplateCardEditor extends ScopedRegistryHost(LitElement) implem
     return this._config?.entity_image || false;
   }
 
-  get _foreground_image(): boolean {
-    return this._config?.foreground_image || false;
-  }
-
 
   get _entity(): string {
     return this._config?.entity || '';
@@ -116,13 +112,6 @@ export class BoilerplateCardEditor extends ScopedRegistryHost(LitElement) implem
           @input=${this._valueChanged}
         ></mwc-textfield>
       `}
-      <mwc-formfield .label=${`Show Foreground Image ${this._entity_image ? 'show' : 'hide'}`}>
-        <mwc-switch
-          .checked=${this._foreground_image !== false}
-          .configValue=${'foreground_image'}
-          @change=${this._valueChanged}
-        ></mwc-switch>
-      </mwc-formfield>
     `;
   }
 

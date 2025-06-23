@@ -1,1 +1,1 @@
-export const CARD_VERSION = '0.1.5';
+export const CARD_VERSION = '0.2.0';

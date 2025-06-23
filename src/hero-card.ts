@@ -148,32 +148,27 @@ export class HeroCard extends LitElement {
         >
           <figure>
             <img class='background' src='${this._getImageSource()}' loading='lazy' />
-            <picture>
-              <img src='${this._getImageSource()}' loading='lazy' />
-              <img src='${this._getImageSource()}' loading='lazy' />
-              ${this.config.foreground_image ? html`
-                <img class='main' src='${this._getImageSource()}' loading='lazy' />
-              ` : null}
-            </picture>
           </figure>
-          ${this.config.heading ? html`
-            <h1>
-              <ha-template
-                hass=${this.hass}
-                template=${this.config.heading}
-                value=${''}
-              ></ha-template>  
-            </h1>
-          ` : ''}
-          ${this.config.subheading ? html`
-            <p>
-              <ha-template
-                hass=${this.hass}
-                template=${this.config.subheading}
-                value=${''}
-              ></ha-template>  
-            </p>
-          ` : ''}
+          <figcaption>
+            ${this.config.heading ? html`
+              <h1>
+                <ha-template
+                  hass=${this.hass}
+                  template=${this.config.heading}
+                  value=${''}
+                ></ha-template>  
+              </h1>
+            ` : ''}
+            ${this.config.subheading ? html`
+              <p>
+                <ha-template
+                  hass=${this.hass}
+                  template=${this.config.subheading}
+                  value=${''}
+                ></ha-template>  
+              </p>
+            ` : ''}
+          </figcaption>
         </div>
       </dynamic-color>
     `;
@@ -229,8 +224,22 @@ export class HeroCard extends LitElement {
         bottom: 0;
         height: 100%;
         width: 100%;
-        display: flex;
         margin: 0;
+      }
+      figcaption {
+        position:absolute;
+        z-index: 0;
+        right: 0;
+        bottom: 0;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        display: flex;
+        flex-flow: column;
+        justify-content:flex-end;
+        padding: calc(2 * var(--column-gap)) calc(2.5 * var(--column-gap));
+        --mix-color: color-mix(in srgb, var(--md-sys-color-on-secondary) 90%, #FFFFFF00 10%);
+        background: radial-gradient(ellipse 100% 60% at 20% 80%, var(--mix-color) 30%, transparent)
       }
       picture {
         position:relative;
@@ -239,55 +248,24 @@ export class HeroCard extends LitElement {
       }
       img,svg {
         height: 100%;
-        width: auto;
+        width: 100%;
+        object-fit: cover;
         position:relative;
         transition:  1.5s ease-in-out;
-        transition-property: transform,opacity;
-      }
-      img.background {
-        width: 30%;
-        filter: blur(30px);
-        transform: rotateY(180deg);
-        animation: 7s ease-in-out infinite alternate-reverse backgroundFade;
-      }
-      picture img:not(.main) {
-        position: absolute;
-        inset: 0;
-        filter: blur(10px);
-      }
-      picture img:first-child {
-        transform: scale(1.24);
-        filter: blur(10px) opacity(0.7);
-      }
-      img.main {
-        border-radius: calc(1 * var(--column-gap));
-        mask-image: radial-gradient(50% 171% at 19% 50%, #000000FF 0%, #00FFFF00 35%),radial-gradient(50% 121% at 35% 50%, #000000FF 18%, #00FFFF00 35%),radial-gradient(50% 141% at 49% 50%, #000000FF 18%, #00FFFF00 35%),radial-gradient(50% 141% at 69% 50%, #000000FF 18%, #00FFFF00 35%),radial-gradient(50% 141% at 79% 50%, #000000FF 18%, #00FFFF00 35%);
-
+        transition-property: transform;
+        will-change: transform;
       }
       h1,p {
         position:relative;
         margin: 0;
-        mix-blend-mode: color-dodge;
+        line-height: 1;
       }
       h1 {
-        margin-block: 1rem;
-      }
-      @keyframes backgroundFade {
-        from {
-          filter: blur(30px) saturate(5);
-          transform: scale(1) rotate(0deg) skew(3deg);
-        }
-        to {
-          filter: blur(50px) saturate(2.5);
-          transform: scale(1.3) rotate(3deg);
-        }
+        margin-block: 1rex;
       }
       @media (hover: hover) {
-        div:hover picture img {
+        div:hover img {
           transform: scale(1.2);
-        }
-        div:hover img.background {
-          opacity: 0.1;
         }
       }
     `;
